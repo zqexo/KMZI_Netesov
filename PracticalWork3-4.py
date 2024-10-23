@@ -28,7 +28,7 @@ class HillCipher:
     def _mod_matrix(self, matrix):
         """Вычисляет модуль матрицы по mod (для предотвращения отрицательных значений)"""
         return (
-                matrix % self.mod
+            matrix % self.mod
         )  # Берем остаток от деления каждого элемента матрицы на mod
 
     def _matrix_mult(self, matrix, vector):
@@ -54,7 +54,7 @@ class HillCipher:
 
         # Шифруем каждый блок
         for i in range(0, len(vector), block_size):
-            block = vector[i: i + block_size]  # Берем блок длины block_size
+            block = vector[i : i + block_size]  # Берем блок длины block_size
             encrypted_block = self._matrix_mult(
                 self.encryption_matrix, block
             )  # Умножаем матрицу на блок и берем mod
@@ -78,7 +78,7 @@ class HillCipher:
 
         # Расшифровываем каждый блок
         for i in range(0, len(vector), block_size):
-            block = vector[i: i + block_size]  # Берем блок длины block_size
+            block = vector[i : i + block_size]  # Берем блок длины block_size
             decrypted_block = self._matrix_mult(
                 self.decryption_matrix, block
             )  # Умножаем матрицу на блок и берем mod

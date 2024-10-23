@@ -1,50 +1,53 @@
 # Магический квадрат 4x4
 # Вариант 20(мой вариант) % 12(всего вариантов) = 8
-magic_square = [
-    [1, 12, 13, 8],
-    [15, 6, 3, 10],
-    [4, 9, 16, 5],
-    [14, 7, 2, 11]
-]
+magic_square = [[1, 12, 13, 8], [15, 6, 3, 10], [4, 9, 16, 5], [14, 7, 2, 11]]
 
 
 def encrypt_magic_square(text):
     # Удаляем пробелы и переводим текст в верхний регистр для единообразия
     text = text.replace(" ", "").upper()
     n = len(magic_square)  # Размер магического квадрата (4 для 4x4)
-    matrix = [''] * (n * n)  # Создаем пустой список для зашифрованного сообщения
+    matrix = [""] * (n * n)  # Создаем пустой список для зашифрованного сообщения
 
     # Записываем текст в магический квадрат по номерам ячеек
     index = 0  # Индекс для символов текста
     for i in range(n):
         for j in range(n):
             if index < len(text):  # Если есть еще символы в тексте
-                matrix[magic_square[i][j] - 1] = text[index]  # Вписываем символ в соответствующую ячейку
+                matrix[magic_square[i][j] - 1] = text[
+                    index
+                ]  # Вписываем символ в соответствующую ячейку
                 index += 1
             else:
-                matrix[magic_square[i][j] - 1] = ' '  # Заполняем пробелами, если текст короче квадрата
+                matrix[magic_square[i][j] - 1] = (
+                    " "  # Заполняем пробелами, если текст короче квадрата
+                )
 
     # Собираем зашифрованное сообщение из заполненной матрицы по строкам
-    encrypted_text = ''.join(matrix)
+    encrypted_text = "".join(matrix)
     return encrypted_text
 
 
 def decrypt_magic_square(encrypted_text):
     n = len(magic_square)  # Размер магического квадрата (4 для 4x4)
-    matrix = [''] * (n * n)  # Создаем пустой список для расшифрованного сообщения
+    matrix = [""] * (n * n)  # Создаем пустой список для расшифрованного сообщения
 
     # Заполняем матрицу зашифрованным текстом по строкам
     index = 0
     for i in range(n * n):
         if index < len(encrypted_text):  # Если есть еще символы в зашифрованном тексте
-            matrix[i] = encrypted_text[index]  # Заполняем матрицу символами зашифрованного текста
+            matrix[i] = encrypted_text[
+                index
+            ]  # Заполняем матрицу символами зашифрованного текста
             index += 1
 
     # Собираем исходное сообщение, читая матрицу по номерам ячеек магического квадрата
-    decrypted_text = ''
+    decrypted_text = ""
     for i in range(n):
         for j in range(n):
-            decrypted_text += matrix[magic_square[i][j] - 1]  # Собираем символы по их номеру в магическом квадрате
+            decrypted_text += matrix[
+                magic_square[i][j] - 1
+            ]  # Собираем символы по их номеру в магическом квадрате
 
     return decrypted_text
 
@@ -92,11 +95,17 @@ def encrypt_vigenere(text, key):
         if char in alphabet:  # Проверяем, является ли символ буквой алфавита
             # Определяем индекс строки и столбца в квадрате Виженера
             row = alphabet.index(char)  # Индекс строки по символу текста
-            col = alphabet.index(key[key_index % len(key)])  # Индекс столбца по символу ключа
-            encrypted_text += vigenere_square[row][col]  # Добавляем зашифрованный символ в сообщение
+            col = alphabet.index(
+                key[key_index % len(key)]
+            )  # Индекс столбца по символу ключа
+            encrypted_text += vigenere_square[row][
+                col
+            ]  # Добавляем зашифрованный символ в сообщение
             key_index += 1  # Переходим к следующему символу ключа
         else:
-            encrypted_text += char  # Добавляем символ без изменений, если это не буква алфавита
+            encrypted_text += (
+                char  # Добавляем символ без изменений, если это не буква алфавита
+            )
 
     return encrypted_text
 
@@ -109,13 +118,19 @@ def decrypt_vigenere(encrypted_text, key):
     for char in encrypted_text:
         if char in alphabet:  # Проверяем, является ли символ буквой алфавита
             # Определяем индекс столбца и строки в квадрате Виженера
-            col = alphabet.index(key[key_index % len(key)])  # Индекс столбца по символу ключа
+            col = alphabet.index(
+                key[key_index % len(key)]
+            )  # Индекс столбца по символу ключа
             # Находим индекс строки, в которой находится зашифрованный символ
             row = next(i for i, row in enumerate(vigenere_square) if row[col] == char)
-            decrypted_text += alphabet[row]  # Добавляем расшифрованный символ в сообщение
+            decrypted_text += alphabet[
+                row
+            ]  # Добавляем расшифрованный символ в сообщение
             key_index += 1  # Переходим к следующему символу ключа
         else:
-            decrypted_text += char  # Добавляем символ без изменений, если это не буква алфавита
+            decrypted_text += (
+                char  # Добавляем символ без изменений, если это не буква алфавита
+            )
 
     return decrypted_text
 
